@@ -6,8 +6,10 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import edu.isistan.entidad.Estudiante;
+import edu.isistan.entidad.Matricula;
 
 
 public class EstudianteJPAController implements Serializable {
@@ -83,7 +85,7 @@ public class EstudianteJPAController implements Serializable {
 		}
 	}
 
-	public Estudiante get(int lu) {
+	public Estudiante getLU(int lu) {
 		EntityManager em = emf.createEntityManager();
 		try {
 			return em.find(Estudiante.class, lu);
@@ -104,6 +106,37 @@ public class EstudianteJPAController implements Serializable {
 			return listado.get(0);		
 		}
 	
+	}
+	
+	public List<Estudiante> getEstudiantesOrdenados() {
+		EntityManager em = emf.createEntityManager();
+		List<Estudiante> listado = em.createQuery("SELECT E FROM Estudiante E ORDER BY E.apellido ASC ", Estudiante.class)
+				.getResultList();
+
+		return listado;
+	}
+	
+	public List<Estudiante> getEstudiantesGenero(String genero) {
+		EntityManager em = emf.createEntityManager();
+		List<Estudiante> listado = em.createQuery("SELECT E FROM Estudiante E WHERE E.genero =:genero ", Estudiante.class)
+				.setParameter("genero", genero)
+				.getResultList();
+
+		return listado;
+	}
+	
+	public List<Estudiante> getEstudiantesCarreraCiudad(String carrera,String ciudad) {
+		EntityManager em = emf.createEntityManager();
+		Query q = em.createNativeQuery("select e.* from Estudiante e \r\n" + 
+				"join Matricula m ON m.id_estudiante = e.lu\r\n" + 
+				"join Carrera c ON m.id_carrera = c.id\r\n" + 
+				"where c.nombre_carrera =:carrera AND e.ciudad_residencia =:ciudad ", Estudiante.class)
+				.setParameter("carrera", carrera).
+				setParameter("ciudad", ciudad);
+		List<Estudiante> listado = q.getResultList();
+
+
+		return listado;
 	}
 
 

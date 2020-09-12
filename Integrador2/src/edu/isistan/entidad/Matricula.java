@@ -26,6 +26,10 @@ public class Matricula implements Serializable{
 	
 	@Column (nullable=false)
 	private Timestamp fecha_inscripcion;
+	
+	@Column (nullable=true)
+	private Timestamp fecha_egreso;
+	
 	@Column (nullable=false, name="graduado")
 	private boolean isGraduado;
 	
@@ -36,6 +40,15 @@ public class Matricula implements Serializable{
 
 
 
+	public Matricula(Estudiante estudiante, Carrera carrera, Timestamp fecha_inscripcion, boolean isGraduado, Timestamp fecha_egreso) {
+		super();
+		this.estudiante = estudiante;
+		this.carrera = carrera;
+		this.fecha_inscripcion = fecha_inscripcion;
+		this.isGraduado = isGraduado;
+		this.fecha_egreso = fecha_egreso;
+	}
+	
 	public Matricula(Estudiante estudiante, Carrera carrera, Timestamp fecha_inscripcion, boolean isGraduado) {
 		super();
 		this.estudiante = estudiante;

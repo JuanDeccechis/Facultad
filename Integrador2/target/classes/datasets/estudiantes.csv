@@ -1,5 +1,7 @@
 lu,nombre,apellido,edad,genero,dni,ciudad_residencia
 1,Pedro,Perez,18,M,44222444,Tandil
 2,Juan,Lopez,18,M,45555222,Tandil
-3,Roberto,Santamarina,18,M,14522333,Tandil
+3,Roberto,Santamarina,18,M,14522333,Azul
 4,Lucia,Martinez,33,F,15444225,Tandil
+5,Romina,Sanchez,23,F,38244225,Rauch
+6,Maria,Perez,25,F,15444235,Tandil

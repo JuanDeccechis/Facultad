@@ -6,8 +6,10 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import edu.isistan.entidad.Carrera;
+import edu.isistan.entidad.Estudiante;
 
 public class CarreraJPAController implements Serializable{
 
@@ -99,6 +101,18 @@ public class CarreraJPAController implements Serializable{
 			return listado.get(0);		
 		}
 	
+	}
+	
+	public List<Carrera> getCarrerasOrdCantEstudiantes(){
+		EntityManager em = emf.createEntityManager();
+		Query q = em.createNativeQuery("select c.* from Carrera c \r\n" + 
+				"inner join Matricula m ON c.id = m.id_carrera\r\n" + 
+				"group by c.id\r\n" + 
+				"order by count(m.id_estudiante) desc ", Carrera.class);
+		List<Carrera> listado = q.getResultList();
+
+
+		return listado;
 	}
 
 

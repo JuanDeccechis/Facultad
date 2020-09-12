@@ -44,6 +44,16 @@ public class Estudiante {
 		this.dni = dni;
 		this.ciudad_residencia = ciudad_residencia;
 	}
+	
+	public Estudiante(String nombre, String apellido, int edad, String genero, int dni, String ciudad_residencia) {
+		super();
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.edad = edad;
+		this.genero = genero;
+		this.dni = dni;
+		this.ciudad_residencia = ciudad_residencia;
+	}
 
 
 	public int getLu() {
@@ -129,7 +139,7 @@ public class Estudiante {
 	@Override
 	public String toString() {
 		return "Estudiante [lu=" + lu + ", nombre=" + nombre + ", apellido=" + apellido + ", edad=" + edad + ", genero="
-				+ genero + ", dni=" + dni + ", ciudad_residencia=" + ciudad_residencia + ", carreras=" + carreras + "]";
+				+ genero + ", dni=" + dni + ", ciudad_residencia=" + ciudad_residencia+"]";
 	}
 
 

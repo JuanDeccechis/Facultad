@@ -61,17 +61,17 @@ public class Insert {
 		//		carreras.insertCarrera(c2);
 		cargarCarreras(carreras);
 
-		Matricula m1 = new Matricula(e1, c1, new Timestamp(cal.getTimeInMillis()), false);
-		Matricula m2 = new Matricula(e2, c1, new Timestamp(cal.getTimeInMillis()), false);
-		Matricula m3 = new Matricula(e3, c2, new Timestamp(cal.getTimeInMillis()), false);
-		Matricula m4 = new Matricula(e4, c2, new Timestamp(cal.getTimeInMillis()), true);
+		Matricula m1 = new Matricula(e1, c1, new Timestamp(cal.getTimeInMillis()), false, null);
+		Matricula m2 = new Matricula(e2, c1, new Timestamp(cal.getTimeInMillis()), false, null);
+		Matricula m3 = new Matricula(e3, c2, new Timestamp(cal.getTimeInMillis()), false, null);
+		Matricula m4 = new Matricula(e4, c2, new Timestamp(cal.getTimeInMillis()), true,new Timestamp(cal.getTimeInMillis()));
 
 
 		MatriculaJPAController matriculas = new MatriculaJPAController();
-//		matriculas.insert(m1);
-//		matriculas.insert(m2);
-//		matriculas.insert(m3);
-//		matriculas.insert(m4);
+		//		matriculas.insert(m1);
+		//		matriculas.insert(m2);
+		//		matriculas.insert(m3);
+		//		matriculas.insert(m4);
 		cargarMatriculas(matriculas);
 
 
@@ -127,8 +127,13 @@ public class Insert {
 				e.setLu(Integer.parseInt(row.get("id_estudiante")));
 				c.setId(Integer.parseInt(row.get("id_carrera")));
 				Date parsedDate = dateFormat.parse(row.get("fecha_ingreso"));
-				Timestamp fecha = new java.sql.Timestamp(parsedDate.getTime());
-				m = new Matricula(e, c, fecha , Boolean.parseBoolean(row.get("egresado")));
+				Timestamp fecha_ingreso = new java.sql.Timestamp(parsedDate.getTime());
+				Timestamp fecha_egreso = null;
+				if (row.get("fecha_egreso").length() > 1) {
+					parsedDate = dateFormat.parse(row.get("fecha_egreso"));
+					fecha_egreso = new java.sql.Timestamp(parsedDate.getTime());
+				}
+				m = new Matricula(e, c, fecha_ingreso , Boolean.parseBoolean(row.get("egresado")),fecha_egreso);
 				matriculas.insert(m);
 			}
 		} catch (FileNotFoundException e6) {

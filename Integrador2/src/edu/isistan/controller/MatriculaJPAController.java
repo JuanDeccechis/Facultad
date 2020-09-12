@@ -27,8 +27,7 @@ public class MatriculaJPAController implements Serializable {
 		try {
 			em = emf.createEntityManager();
 			if(this.getMatricula(matricula.getCarrera(), matricula.getEstudiante()) != null) {
-				System.out.println("El alumno "+matricula.getEstudiante().getNombre()+" "+matricula.getEstudiante().getApellido()+
-						" ya se encuentra matriculado en la carrera "+matricula.getCarrera().getNombre_carrera());
+				System.out.println("El alumno ya se encuentra matriculado en la carrera");
 			} else {
 				em.getTransaction().begin();
 				em.persist(matricula);
@@ -66,14 +65,6 @@ public class MatriculaJPAController implements Serializable {
 		try {
 			em = emf.createEntityManager();
 			em.getTransaction().begin();
-			try {
-				//				em.createQuery("DELETE FROM Carrera C WHERE C.id_estuduiante =:estudiante AND C.id_carrera =:id_carrera ", Matricula.class)
-				//				.setParameter("id_estudiante", matricula.getEstudiante().getLu())
-				//				.setParameter("id_carrera", matricula.getCarrera().getId())
-				//				.executeUpdate();
-			} catch (Exception e) {
-				System.out.println("Error al eliminar la matricula");
-			}
 			em.remove(matricula);
 			em.getTransaction().commit(); 
 		} finally {
