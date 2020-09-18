@@ -77,8 +77,6 @@ public class MatriculaJPAController implements Serializable {
 
 	public Matricula getMatricula(Carrera idCarrera, Estudiante idEstudiante) {
 		EntityManager em = emf.createEntityManager();
-		//		Query q = em.createNativeQuery("SELECT m FROM Matricula m WHERE m.id_estudiante =:es AND m.id_carrera =:ca");
-		//		List<Object[]> authors = q.getResultList();
 		Query q = em.createNativeQuery("SELECT * FROM Matricula M WHERE M.id_estudiante =:es AND M.id_carrera =:ca ", Matricula.class)
 				.setParameter("es", idEstudiante).
 				setParameter("ca", idCarrera);
@@ -90,6 +88,33 @@ public class MatriculaJPAController implements Serializable {
 			return listado.get(0);		
 		}
 
+	}
+	
+	public List<Object[]> getReporte() {
+		EntityManager em = emf.createEntityManager();
+		Query q = em.createNativeQuery("\r\n" + 
+				"(SELECT c.nombre_carrera AS \"Carrera\",\r\n" + 
+				"SUM(if(m.graduado = '1', 0, 0)) AS \"CantInscriptos\",\r\n" + 
+				" count(c.id) AS \"CantEgresados\",\r\n" + 
+				" extract(year from m.fecha_egreso) AS \"Año\"\r\n" + 
+				" FROM Carrera c \r\n" + 
+				"JOIN Matricula m ON m.id_carrera = c.id\r\n" + 
+				"WHERE m.graduado = \"1\"\r\n" + 
+				"GROUP BY extract(year from m.fecha_egreso), c.id \r\n" + 
+				"ORDER BY c.nombre_carrera ASC, extract(year from m.fecha_egreso) ASC)\r\n" + 
+				"UNION \r\n" + 
+				"(SELECT c.nombre_carrera AS \"Carrera\",\r\n" + 
+				" count(c.id) AS \"CantInscriptos\",\r\n" + 
+				" SUM(if(m.graduado = '1', 0, 0)) AS \"CantEgresados\",\r\n" + 
+				" extract(year from m.fecha_inscripcion) AS \"Año incripcion\"\r\n" + 
+				" FROM Carrera c \r\n" + 
+				"JOIN Matricula m ON m.id_carrera = c.id\r\n" + 
+				"GROUP BY extract(year from m.fecha_inscripcion), c.id \r\n" + 
+				"ORDER BY c.nombre_carrera ASC, extract(year from m.fecha_inscripcion) ASC\r\n" + 
+				")\r\n" + 
+				"ORDER BY Carrera ASC, Año ASC ");
+		List<Object[]> listado = q.getResultList();
+		return listado;
 	}
 
 }

@@ -1,5 +1,7 @@
 package edu.isistan;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,7 +17,7 @@ public class Select {
 
 	public static void main(String[] args) throws ParseException {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
-		Date parsedDate = dateFormat.parse("2015-10-24 01:02:55.000000");
+		Date parsedDate = dateFormat.parse("2020-10-24 01:02:55.000000");
 		Timestamp fecha = new java.sql.Timestamp(parsedDate.getTime());
 
 		//PUNTO 2
@@ -67,10 +69,16 @@ public class Select {
 		}
 		
 		
-
-		///////////////////////////////////////////////
-		//ACA VA LA GENIALIDAD DE NUESTRA DBA BELEN////
-		///////////////////////////////////////////////
+		//PUNTO3
+		//GENERAR UN REPORTE QUE MUESTRE LAS CARRERAS CON LA CANTIDAD DE INSCRIPTOS Y EGRESADOS POR AÑO ORDENADOS POR NOMBRE Y AÑO
+		System.out.println("------------------------------------------");
+		System.out.println("REPORTE CARRERAS");
+		System.out.println("CARRERA CANTINSCRIPTOS CANTEGRESADOS ANIO");
+		for (Object[] reporte : mjpa.getReporte()) {
+			System.out.print(((String)reporte[0])+" | "+(reporte[1])+" | "+((BigDecimal)reporte[2])+" | "+((BigInteger)reporte[3]));
+			System.out.println();
+		}
+		
 
 	}
 

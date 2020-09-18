@@ -28,7 +28,7 @@ public class EstudianteJPAController implements Serializable {
 		EntityManager em = null;
 		try {
 			em = emf.createEntityManager();
-			if (this.buscarEstudianteDNI(estudiante.getDni()) != null ) {
+			if (this.getEstudianteDNI(estudiante.getDni()) != null ) {
 				System.out.println("El estudiante con el DNI: "+estudiante.getDni()+" ya se encuentra registrado");
 			} else {
 				em.getTransaction().begin();
@@ -94,7 +94,7 @@ public class EstudianteJPAController implements Serializable {
 		}
 	}
 
-	public Estudiante buscarEstudianteDNI(int dni) {
+	public Estudiante getEstudianteDNI(int dni) {
 		EntityManager em = emf.createEntityManager();
 		List<Estudiante> listado = em.createQuery("SELECT E FROM Estudiante E WHERE E.dni =:dni ", Estudiante.class)
 				.setParameter("dni", dni)
