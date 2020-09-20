@@ -1,4 +1,10 @@
 package edu.isistan;
+/** Represents an employee.
+ * @author Mateo Zarrabeitia
+ * @author Juan Cruz Deccechis
+ *  @author Belen Sofia Enemark
+ * @version 1.8
+*/
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
