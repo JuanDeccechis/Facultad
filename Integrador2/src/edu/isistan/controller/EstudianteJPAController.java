@@ -116,6 +116,14 @@ public class EstudianteJPAController implements Serializable {
 		return listado;
 	}
 	
+	public Estudiante getUltimoEstudiante() {
+		EntityManager em = emf.createEntityManager();
+		List<Estudiante> ultimoEstudiante = (List<Estudiante>) em.createQuery("SELECT E FROM Estudiante E ORDER BY E.lu ", Estudiante.class)
+				.setMaxResults(1)
+				.getResultList();
+		return (Estudiante) ultimoEstudiante.get(0);
+	}
+	
 	public List<Estudiante> getEstudiantesGenero(String genero) {
 		EntityManager em = emf.createEntityManager();
 		List<Estudiante> listado = em.createQuery("SELECT E FROM Estudiante E WHERE E.genero =:genero ", Estudiante.class)

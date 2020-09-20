@@ -1,7 +1,6 @@
 package edu.isistan;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,12 +22,18 @@ public class Select {
 		//PUNTO 2
 		//INCISO A) DAR DE ALTA UN ESTUDIANTE
 		EstudianteJPAController ejpa = new EstudianteJPAController();
-		Estudiante e1 = new Estudiante("Juan", "Perez", 18, "M", 12345678, "Tandil");
+		Estudiante ultimoEstudiante = ejpa.getUltimoEstudiante();
+		int luNueva = ultimoEstudiante.getLu() + 1;
+		Estudiante e1 = new Estudiante(luNueva, "Juan", "Perez", 18, "M", 12325678, "Tandil");
 		ejpa.insert(e1);
 
 		//INCISO B) MATRICULAR UN ESTUDIANTE
 		CarreraJPAController cjpa = new CarreraJPAController();
 		Carrera c1 = cjpa.getCarreraId(1);
+		if (c1 == null) {
+			c1 = new Carrera(1, "Tudai");
+			cjpa.insertCarrera(c1);
+		}
 		MatriculaJPAController mjpa = new MatriculaJPAController();
 		Matricula m1 = new Matricula(e1, c1,fecha, false);
 		mjpa.insert(m1);
@@ -75,7 +80,7 @@ public class Select {
 		System.out.println("REPORTE CARRERAS");
 		System.out.println("CARRERA CANTINSCRIPTOS CANTEGRESADOS ANIO");
 		for (Object[] reporte : mjpa.getReporte()) {
-			System.out.print(((String)reporte[0])+" | "+(reporte[1])+" | "+((BigDecimal)reporte[2])+" | "+((BigInteger)reporte[3]));
+			System.out.print(((String)reporte[0])+" | "+(reporte[1])+" | "+((BigDecimal)reporte[2])+" | "+((Integer)reporte[3]));
 			System.out.println();
 		}
 		
