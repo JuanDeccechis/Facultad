@@ -49,6 +49,7 @@ public class Matricula implements Serializable{
 		this.fecha_egreso = fecha_egreso;
 	}
 	
+
 	public Matricula(Estudiante estudiante, Carrera carrera, Timestamp fecha_inscripcion, boolean isGraduado) {
 		super();
 		this.estudiante = estudiante;
@@ -96,6 +97,16 @@ public class Matricula implements Serializable{
 
 	public void setGraduado(boolean isGraduado) {
 		this.isGraduado = isGraduado;
+	}
+
+
+	public Timestamp getFecha_egreso() {
+		return fecha_egreso;
+	}
+
+
+	public void setFecha_egreso(Timestamp fecha_egreso) {
+		this.fecha_egreso = fecha_egreso;
 	}
 
 
