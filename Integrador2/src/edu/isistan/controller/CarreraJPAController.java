@@ -10,15 +10,21 @@ import javax.persistence.Query;
 
 import edu.isistan.entidad.Carrera;
 import edu.isistan.entidad.Estudiante;
-
+/**
+ * @author Belen Enemark
+ * @author Juan Deccechis
+ * @author Mateo Zarrabeitia
+ * Esta clase se ocupa  de insertar la carrera y de actualizar la carrera*/
 public class CarreraJPAController implements Serializable{
 
 	private static final long serialVersionUID = 902997133635722325L;
 	private EntityManagerFactory emf = null;
-
+	/**Controlador de carrera */
 	public CarreraJPAController() {
 		this.emf = Persistence.createEntityManagerFactory("Example");
 	}	
+	/**Inserta la carrera en la base de datos 
+	 * @param carrera se carga el objeto que contiene los datos de la carrera*/
 	public void insertCarrera(Carrera carrera) {
 		EntityManager em = null;
 		try {
@@ -39,7 +45,9 @@ public class CarreraJPAController implements Serializable{
 			}
 		}
 	}
-
+	/**Actualiza la carrera en la base de datos
+	 * @param carrera se pasa el objeto que va a permitir referenciar con la carrera que se espera actualizar
+	 * */
 	public void updateCarrera(Carrera carrera) {
 		EntityManager em = null;
 		try {
@@ -58,7 +66,9 @@ public class CarreraJPAController implements Serializable{
 			}
 		}
 	}
-
+	/**Borra la carrera por medio del id de carrera 
+	 * @param id identificador de carrera
+	 * */
 	public void deleteCarrera(int id) {
 		EntityManager em = null;
 		try {
@@ -79,7 +89,9 @@ public class CarreraJPAController implements Serializable{
 			}
 		}
 	}
-	
+	/**Obtiene la carrera por su id
+	 * @param id identificador de carrera para buscarlo en la base de datos
+	 * @return em.find devuelve el resultado de la busqueda de la carrera */
 	public Carrera getCarreraId(int id) {
 		EntityManager em = emf.createEntityManager();
 		try {
@@ -88,7 +100,10 @@ public class CarreraJPAController implements Serializable{
 			em.close();
 		}
 	}
-	
+	/**
+	 * Obtiene la carrera por nombre de carrera
+	 * @param nombreCarrera contiene el nombre de carrera que se esta buscando 
+	 * @return listado.get(0) obtiene la primer carrera encontrada con ese nombre*/
 	public Carrera getCarreraNombre(String nombreCarrera) {
 		EntityManager em = emf.createEntityManager();
 		List<Carrera> listado = em.createQuery("SELECT C FROM Carrera C WHERE C.nombre_carrera =:nombre ", Carrera.class)
@@ -102,7 +117,8 @@ public class CarreraJPAController implements Serializable{
 		}
 	
 	}
-	
+	/** Este metodo obtiene las carreras ordenadas por cantidad de estudiantes sin distinguir entre los recibidos y no recibidos. Cantidad estudiantes totales
+	 * @return listado listado de carreras ordenadad por estudiantes*/
 	public List<Carrera> getCarrerasOrdCantEstudiantes(){
 		EntityManager em = emf.createEntityManager();
 		Query q = em.createNativeQuery("select c.* from Carrera c \r\n" + 
