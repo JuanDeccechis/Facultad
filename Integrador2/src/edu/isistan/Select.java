@@ -1,5 +1,7 @@
 package edu.isistan;
 
+
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -11,7 +13,10 @@ import edu.isistan.controller.MatriculaJPAController;
 import edu.isistan.entidad.Carrera;
 import edu.isistan.entidad.Estudiante;
 import edu.isistan.entidad.Matricula;
-
+/** Esta clase ejecuta los diferentes incisos que tienen que ver con insercion de datos
+ * @author Belen Enemark
+ * @author Juan Deccechis
+ * @author Mateo Zarrabeitia*/
 public class Select {
 
 	public static void main(String[] args) throws ParseException {

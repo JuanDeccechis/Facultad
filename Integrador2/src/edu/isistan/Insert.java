@@ -2,6 +2,7 @@ package edu.isistan;
 
 
 import java.io.FileNotFoundException;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -19,6 +20,11 @@ import edu.isistan.controller.MatriculaJPAController;
 import edu.isistan.entidad.Carrera;
 import edu.isistan.entidad.Estudiante;
 import edu.isistan.entidad.Matricula;
+
+/** Esta clase ejecuta los diferentes incisos que tiene que ver con la insercion de elementos desde un csv
+ * @author Belen Enemark
+ * @author Juan Deccechis
+ * @author Mateo Zarrabeitia*/
 public class Insert {
 
 	private static final String path = "src/datasets/";

@@ -8,7 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
+/**
+ * @author Belen Enemark
+ * @author Juan Deccechis
+ * @author Mateo Zarrabeitia
+ * Esta clase contiene los metodos para generar una Matricula*/
 @Entity
 public class Matricula implements Serializable{
 
@@ -32,14 +36,20 @@ public class Matricula implements Serializable{
 	
 	@Column (nullable=false, name="graduado")
 	private boolean isGraduado;
-	
+	/**Constructor vacio de matricula*/
 	public Matricula() {
 		super();
 	}
 	
 
 
-
+	/**Constructor con los datos de estudiante con el campo de fecha_egreso estudiante. No todos los estudiantes del listado estan graduados
+	 * @param estudiante objeto de tipo estudiante @see edu.isistan.entidad/Estudiante
+	 * @param carrera objeto de tipo carrera @see edu.isistan.entidad/Carrera
+	 * @param fecha_inscripcion fecha de inscripcion del estudiante
+	 * @param isGraduado booleano para indicar si una persona esta graduada o no
+	 * @param fecha_egreso fecha de egreso del estudiante
+	 * */
 	public Matricula(Estudiante estudiante, Carrera carrera, Timestamp fecha_inscripcion, boolean isGraduado, Timestamp fecha_egreso) {
 		super();
 		this.estudiante = estudiante;
@@ -49,7 +59,12 @@ public class Matricula implements Serializable{
 		this.fecha_egreso = fecha_egreso;
 	}
 	
-
+	/**Constructor con los datos de estudiante con el campo isGraduado
+	 * @param estudiante objeto de tipo estudiante @see edu.isistan.entidad/Estudiante
+	 * @param carrera objeto de tipo carrera @see edu.isistan.entidad/Carrera
+	 * @param fecha_inscripcion fecha de inscripcion del estudiante
+	 * @param isGraduado booleano para indicar si una persona esta graduada o nos
+	 * */
 	public Matricula(Estudiante estudiante, Carrera carrera, Timestamp fecha_inscripcion, boolean isGraduado) {
 		super();
 		this.estudiante = estudiante;
@@ -59,17 +74,20 @@ public class Matricula implements Serializable{
 	}
 
 
-
+	/**Obtener estudiante 
+	 * @return estudiante retorna un estudiante relacionado con esta matricula*/
 	public Estudiante getEstudiante() {
 		return estudiante;
 	}
 
-
+	/**Modifica el estudiante
+	 * @param estudiante se pasa el estudiante que se desea asignar a esta matricula*/
 	public void setEstudiante(Estudiante estudiante) {
 		this.estudiante = estudiante;
 	}
 
-
+	/**Obtiene carrera
+	 * @return carrera retorna la carrera que esta relacionada a esta matricula*/
 	public Carrera getCarrera() {
 		return carrera;
 	}
@@ -79,7 +97,8 @@ public class Matricula implements Serializable{
 		this.carrera = carrera;
 	}
 
-
+	/**Obtiene fecha de inscripcion 
+	 * @return devuelve la fecha de inscripcion del alumno*/
 	public Timestamp getFecha_inscripcion() {
 		return fecha_inscripcion;
 	}
@@ -104,7 +123,8 @@ public class Matricula implements Serializable{
 		return fecha_egreso;
 	}
 
-
+	/**Setea la fecha de egreso de un estudiante relacionado a esta matricula
+	 * @param fecha_egreso fecha que se recibio el estudiante*/
 	public void setFecha_egreso(Timestamp fecha_egreso) {
 		this.fecha_egreso = fecha_egreso;
 	}
@@ -132,7 +152,8 @@ public class Matricula implements Serializable{
 
 
 
-
+	/**Redefinicion del equal para manipular carrera o estudiante o graduado
+	 * @param obj va a cambiar de acuerdo a la evaluacion que se necesita ya sea optar por el objeto carrera o estudiante o graduado o fecha_inscripcion como posibles valores */	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

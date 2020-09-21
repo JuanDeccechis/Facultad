@@ -11,17 +11,23 @@ import javax.persistence.Query;
 import edu.isistan.entidad.Carrera;
 import edu.isistan.entidad.Estudiante;
 import edu.isistan.entidad.Matricula;
-
+/**
+ * @author Belen Enemark
+ * @author Juan Deccechis
+ * @author Mateo Zarrabeitia
+ * Esta clase se ocupa  de insertar, actualizar y eliminar estudiante*/
 public class MatriculaJPAController implements Serializable {
 
 	private static final long serialVersionUID = -6284052128342094661L;
 	private EntityManagerFactory emf = null;
 
-
+	/** Constructor que levanta el entity manager factory*/
 	public MatriculaJPAController() {
 		this.emf = Persistence.createEntityManagerFactory("Example");
 	}
-
+	/** Inserta una matricula en la base de datos 
+	 * @param matricula objeto Matricula corresponde a la inscripcion a una carrera de un alumno
+	 * */
 	public void insert(Matricula matricula) {
 		EntityManager em = null;
 		try {
@@ -43,7 +49,8 @@ public class MatriculaJPAController implements Serializable {
 			}
 		}
 	}
-
+	/** Actualiza la matricula en la base de datos, primero la busca 
+	 * @param matricula objeto Matricula corresponde a la inscripcion a una carrera de un alumno */
 	public void update(Matricula matricula) {
 		EntityManager em = null;
 		try {
@@ -59,7 +66,8 @@ public class MatriculaJPAController implements Serializable {
 			}
 		}
 	}
-
+	/** Borra una matricula de la base de datos
+	 * @param matricula */
 	public void delete(Matricula matricula) {
 		EntityManager em = null;
 		try {
@@ -74,7 +82,10 @@ public class MatriculaJPAController implements Serializable {
 		}
 	}
 
-
+	/** Obtener una matricula por Carrera y Estudiante
+	 * @param idCarrera identificador de carrera de la tabla carrera
+	 * @param idEstudiante identificador de estudiante de la tabla estudiante
+	 * @return listado.get(0) retorna el listado en la posicion 0*/
 	public Matricula getMatricula(Carrera idCarrera, Estudiante idEstudiante) {
 		EntityManager em = emf.createEntityManager();
 		Query q = em.createNativeQuery("SELECT * FROM Matricula M WHERE M.id_estudiante =:es AND M.id_carrera =:ca ", Matricula.class)
@@ -89,7 +100,10 @@ public class MatriculaJPAController implements Serializable {
 		}
 
 	}
-	
+	/**Obtener un reporte de la cantidad de inscriptos y egresados por año y carrera. Aqui se opto por hacer la union de las diferentes tablas
+	 * entendemos que no es la forma mas eficionete pero es la unica que encontramos
+	 * @return listado listado con los datos del cruce entre inscriptos, egresados, año y carrera. 
+	 * */
 	public List<Object[]> getReporte() {
 		EntityManager em = emf.createEntityManager();
 		Query q = em.createNativeQuery("\r\n" + 

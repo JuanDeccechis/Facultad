@@ -11,19 +11,24 @@ import javax.persistence.Query;
 import edu.isistan.entidad.Estudiante;
 import edu.isistan.entidad.Matricula;
 
-
+/**
+ * @author Belen Enemark
+ * @author Juan Deccechis
+ * @author Mateo Zarrabeitia
+ * Esta clase se ocupa  de insertar, actualizar y eliminar estudiante*/
 public class EstudianteJPAController implements Serializable {
-
+	/**{@value #emf } emf creacion del entity manager para el controller*/
 	private static final long serialVersionUID = 1L;
 	private EntityManagerFactory emf = null;
 
-
+	/**Crea el constructor */
 	public EstudianteJPAController() {
 		this.emf = Persistence.createEntityManagerFactory("Example");
 	}
 
 
-
+	/**Carga el estudiante, pide el dni para corroborar si el estudiante existe y lo persiste
+	 * @param estudiante se ingresa un objeto estudiante*/
 	public void insert(Estudiante estudiante) {
 		EntityManager em = null;
 		try {
@@ -44,7 +49,8 @@ public class EstudianteJPAController implements Serializable {
 			}
 		}
 	}
-
+	/**Actualiza el estudiante, siempre que el estudiante exista
+	 * @param estudiante se ingresa un estudiante*/
 	public void update(Estudiante estudiante) {
 		EntityManager em = null;
 		try {
@@ -63,13 +69,17 @@ public class EstudianteJPAController implements Serializable {
 			}
 		}
 	}
-
+	/**Borra el estudiante
+		@param  lu, se pasa la libreta universitaria
+	 * Se guarda el dato y se controla en el try que exista el estudiante*/
 	public void delete(int lu) {
 		EntityManager em = null;
 		try {
 			em = emf.createEntityManager();
 			em.getTransaction().begin();
+			
 			Estudiante estudiante = null;
+			
 			try {
 				estudiante = em.getReference(Estudiante.class, lu);
 				estudiante.getLu();
@@ -84,7 +94,9 @@ public class EstudianteJPAController implements Serializable {
 			}
 		}
 	}
-
+	/**Obtener Libreta universitaria
+	 * @param lu es la libreta universitaria
+	 * @return em.find, retorna un estudiante encontrado por libreta universitaria*/
 	public Estudiante getLU(int lu) {
 		EntityManager em = emf.createEntityManager();
 		try {
@@ -93,7 +105,9 @@ public class EstudianteJPAController implements Serializable {
 			em.close();
 		}
 	}
-
+/**Obtener estudiante por dni
+ * @param dni documento nacional de identidad
+ * @return listado.get(0) un estudiante con dni */
 	public Estudiante getEstudianteDNI(int dni) {
 		EntityManager em = emf.createEntityManager();
 		List<Estudiante> listado = em.createQuery("SELECT E FROM Estudiante E WHERE E.dni =:dni ", Estudiante.class)
@@ -107,7 +121,8 @@ public class EstudianteJPAController implements Serializable {
 		}
 	
 	}
-	
+	/**Ordena los estudiantes por apellido
+	 * @return listado listado estudiantes ordenado por apellido*/
 	public List<Estudiante> getEstudiantesOrdenados() {
 		EntityManager em = emf.createEntityManager();
 		List<Estudiante> listado = em.createQuery("SELECT E FROM Estudiante E ORDER BY E.apellido ASC ", Estudiante.class)
@@ -115,7 +130,8 @@ public class EstudianteJPAController implements Serializable {
 
 		return listado;
 	}
-	
+	/** Obtiene el ultimo estudiante cargado
+	 * @return ultimoEstudiante el ultimo estudiante dado de alta*/
 	public Estudiante getUltimoEstudiante() {
 		EntityManager em = emf.createEntityManager();
 		List<Estudiante> ultimoEstudiante = (List<Estudiante>) em.createQuery("SELECT E FROM Estudiante E ORDER BY E.lu ", Estudiante.class)
@@ -123,7 +139,9 @@ public class EstudianteJPAController implements Serializable {
 				.getResultList();
 		return (Estudiante) ultimoEstudiante.get(0);
 	}
-	
+	/**Ordena los estudiantes por genero
+	 * @param genero genero del estudiante
+	 * @return listado estudiantes ordenados por genero*/
 	public List<Estudiante> getEstudiantesGenero(String genero) {
 		EntityManager em = emf.createEntityManager();
 		List<Estudiante> listado = em.createQuery("SELECT E FROM Estudiante E WHERE E.genero =:genero ", Estudiante.class)
@@ -132,7 +150,10 @@ public class EstudianteJPAController implements Serializable {
 
 		return listado;
 	}
-	
+	/**Ordena los estudiantes por carrera y ciudad
+	 * @param carrera carrera que cursa
+	 * @param ciudad ciudad en la que vive
+	 * @return listado estudiantes por genero*/
 	public List<Estudiante> getEstudiantesCarreraCiudad(String carrera,String ciudad) {
 		EntityManager em = emf.createEntityManager();
 		Query q = em.createNativeQuery("select e.* from Estudiante e \r\n" + 
